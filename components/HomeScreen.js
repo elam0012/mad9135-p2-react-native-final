@@ -1,26 +1,30 @@
 import { StyleSheet, Text, View, Image, Button, TextInput,
-        FlatList, StatusBar, ActivityIndicator, Alert } from 'react-native';
+        FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView } from 'react-native';
 import {useState, useEffect} from "react"
 
 
 export default function HomeScreen() {
 
   const [input, setInput] = useState(null); // to catch the text input
+  const[data, setData] = useState(null)
+  const[countryISOCode, setCountryISOCode] = useState(null)
 
-  function buttonPressed() { // to handle the press button to display the input content
-    // alert(input)
-    Alert.alert(
-      "Do you Want see That?",
-      "Tell me more",
-      [
-        {
-          text: "Cancel",
-          onPress: () => console.log("Cancel Pressed"),
-          style: "cancel"
-        },
+  useEffect(() => {
+    fetchData()
+    async function fetchData(){
+      const data = await import("../data/countries")
+      setData(data.countries)
+    }
+  }, [])
+
+  function findISOCode() { 
+    const searchedCountry = data.find((country) => country.name == input)
+    searchedCountry ? setCountryISOCode(searchedCountry.code) :
+      Alert.alert(
+        "Country Not Found!",
+        "Please refer to the Countries tab to check the proper country name",
         { text: "OK", onPress: () => console.log("OK Pressed") }
-      ]
-    );
+      );
   }
 
   return (
@@ -34,8 +38,10 @@ export default function HomeScreen() {
         value={input}
         placeholder="Enter Any Country Name"
       />
-      <Button title='Find' onPress={buttonPressed}/>
-      <Text>ISO Code</Text>
+      <Button title='Find' onPress={findISOCode}/>
+      {data ? <Text>{countryISOCode}</Text>:
+        <ActivityIndicator size="large" color="red" style={styles.indicator}/>
+      }
       <StatusBar backgroundColor="red"/>
     </View>
   );
