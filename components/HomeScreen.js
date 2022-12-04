@@ -2,9 +2,9 @@ import { StyleSheet, Text, View, Image, Button, TextInput,
         FlatList, StatusBar, ActivityIndicator, Alert } from 'react-native';
 import {useState, useEffect} from "react"
 
-const Item = ({ title }) => (
+const Item = ({ country }) => (
   <View style={styles.item}>
-    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.country}>{country}</Text>
   </View>
 );
 
@@ -14,7 +14,7 @@ export default function HomeScreen() {
   const[data, setData] = useState(null)
 
   const renderItem = ({ item }) => (
-    <Item title={item.title} />
+    <Item country={item.name} />
   );
 
   function buttonPressed() { // to handle the press button to display the input content
@@ -34,9 +34,11 @@ export default function HomeScreen() {
   }
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos")
-    .then(response => response.json())
-    .then(data => setData(data))
+    fetchData()
+    async function fetchData(){
+      const data = await import("../data/countries")
+      setData(data.countries)
+    }
   }, [])
 
   return (
@@ -54,7 +56,7 @@ export default function HomeScreen() {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={item => item.id}
+        keyExtractor={item => item.code}
       /> :
       <ActivityIndicator size="large" color="red" style={styles.indicator}/>
       }
@@ -82,13 +84,15 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'gray',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
-  title: {
-    fontSize: 32,
+  country: {
+    fontSize: 20,
+    color: "white",
+    fontWeight: "bold"
   },
   indicator: {
   }

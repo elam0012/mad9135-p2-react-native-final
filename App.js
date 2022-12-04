@@ -2,11 +2,15 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './components/HomeScreen';
-import OtherScreen from './components/OtherPage';
+import PlayScreen from './components/PlayScreen';
+import RecordsScreen from './components/RecordsScreen';
+import { useKeepAwake } from 'expo-keep-awake';
 
 export default function App() {
 
   const Tab = createBottomTabNavigator();
+
+  useKeepAwake()
 
   return (
     <NavigationContainer>
@@ -14,7 +18,8 @@ export default function App() {
         {/* <SafeAreaView> */}
           <Tab.Navigator>
             <Tab.Screen name='Home' component={HomeScreen}/>
-            <Tab.Screen name='Other' component={OtherScreen}/>
+            <Tab.Screen name='Play' component={PlayScreen}/>
+            <Tab.Screen name='Records' component={RecordsScreen}/>
           </Tab.Navigator>
         {/* </SafeAreaView> */}
       </SafeAreaProvider>
