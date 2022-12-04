@@ -1,15 +1,42 @@
 import Checkbox from 'expo-checkbox';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, StatusBar } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Speech from 'expo-speech';
 import { Button } from 'react-native';
+import { useCountry } from '../context/countryContext';
 
 export default function PlayScreen() {
   const [isChecked, setChecked] = useState(false);
 
+  const[countries] = useCountry()
+  const shuffledCountries = countries
+
+  let i = 0
+
+  function shuffle(array) {
+    let currentIndex = array.length,  randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex != 0) {
+
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [array[currentIndex], array[randomIndex]] = [
+        array[randomIndex], array[currentIndex]];
+    }
+
+    return array;
+  }
+
   const speak = () => {
-    const thingToSay = 'e';
+    shuffle(shuffledCountries)
+    i++
+    // const thingToSay = 'e';
+    const thingToSay = shuffledCountries[i].name;
     Speech.speak(thingToSay);
   };
 
