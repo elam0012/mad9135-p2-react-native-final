@@ -12,7 +12,7 @@ export default function PlayScreen() {
   const[countries] = useCountry()
   const shuffledCountries = countries
 
-  let i = 0
+  let i = 0 // counter for teh Countries array length
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -33,9 +33,11 @@ export default function PlayScreen() {
   }
 
   const speak = () => {
-    shuffle(shuffledCountries)
-    i++
-    // const thingToSay = 'e';
+    if (i == 0) {
+      shuffle(shuffledCountries)
+      i = shuffledCountries.length
+    }
+    i--
     const thingToSay = shuffledCountries[i].name;
     Speech.speak(thingToSay);
   };
