@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Button, TextInput,
         FlatList, StatusBar, ActivityIndicator, Alert } from 'react-native';
 import {useState, useEffect} from "react"
+import { useCountry } from '../context/countryContext';
 
 const Item = ({ country }) => (
   <View style={styles.item}>
@@ -9,26 +10,19 @@ const Item = ({ country }) => (
 );
 
 export default function CountriesScreen() {
-  const[data, setData] = useState(null)
+
+  const[countries] = useCountry()
 
   const renderItem = ({ item }) => (
     <Item country={item.name} />
   );
 
-  useEffect(() => {
-    fetchData()
-    async function fetchData(){
-      const data = await import("../data/countries")
-      setData(data.countries)
-    }
-  }, [])
-
   return (
     <View style={styles.container}>
       <Text>The List of  the World Countries</Text>
-      { data? 
+      { countries? 
       <FlatList
-        data={data}
+        data={countries}
         renderItem={renderItem}
         keyExtractor={item => item.code}
       /> :

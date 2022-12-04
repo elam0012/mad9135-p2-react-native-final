@@ -2,24 +2,18 @@ import { StyleSheet, Text, View, Image, Button, TextInput,
         FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView } from 'react-native';
 import {useState, useEffect} from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
+import { useCountry } from '../context/countryContext';
 
 
 export default function HomeScreen() {
 
   const [input, setInput] = useState(null); // to catch the text input
-  const[data, setData] = useState(null)
   const[countryISOCode, setCountryISOCode] = useState(null)
 
-  useEffect(() => {
-    fetchData()
-    async function fetchData(){
-      const data = await import("../data/countries")
-      setData(data.countries)
-    }
-  }, [])
+  const[countries] = useCountry()
 
   function findISOCode() { 
-    const searchedCountry = data.find((country) => country.name == input)
+    const searchedCountry = countries.find((country) => country.name == input)
     searchedCountry ? setCountryISOCode(searchedCountry.code) :
       Alert.alert(
         "Country Not Found!",
@@ -41,7 +35,7 @@ export default function HomeScreen() {
           placeholder="Enter Any Country Name"
         />
         <Button title='Find' onPress={findISOCode}/>
-        {data ? <Text>{countryISOCode}</Text>:
+        {countries ? <Text>{countryISOCode}</Text>:
           <ActivityIndicator size="large" color="red" style={styles.indicator}/>
         }
         <StatusBar backgroundColor="red"/>
