@@ -5,6 +5,8 @@ import MapView from 'react-native-maps';
 import * as Speech from 'expo-speech';
 import { Button } from 'react-native';
 import { useCountry } from '../context/countryContext';
+import CountDown from 'react-native-countdown-component';
+
 
 export default function PlayScreen() {
   const [isChecked, setChecked] = useState(false);
@@ -50,6 +52,18 @@ export default function PlayScreen() {
         <Text style={styles.paragraph}>Normal checkbox</Text>
       </View>
       <Button title="Press to hear some words" onPress={speak} />
+      <CountDown
+        size={30}
+        until={60}
+        onFinish={() => alert('Finished')}
+        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
+        digitTxtStyle={{color: '#1CC625'}}
+        timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
+        separatorStyle={{color: '#1CC625'}}
+        timeToShow={['M', 'S']}
+        timeLabels={{m: null, s: null}}
+        showSeparator
+      />
       <StatusBar backgroundColor="red"/>
     </View>
   );
