@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, Image, Button, TextInput,
         FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView } from 'react-native';
 import {useState, useEffect} from "react"
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 
 
 export default function HomeScreen() {
@@ -28,22 +29,24 @@ export default function HomeScreen() {
   }
 
   return (
-    <View style={styles.container}>
-      <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
-      <Text>The ISO country codes are internationally recognized codes that designate every country and most of the dependent areas a two-letter combination or a three-letter combination; it is like an acronym, that stands for a country or a state. </Text>
-      <Text>Find any Country ISO Code</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setInput}
-        value={input}
-        placeholder="Enter Any Country Name"
-      />
-      <Button title='Find' onPress={findISOCode}/>
-      {data ? <Text>{countryISOCode}</Text>:
-        <ActivityIndicator size="large" color="red" style={styles.indicator}/>
-      }
-      <StatusBar backgroundColor="red"/>
-    </View>
+    <KeyboardAwareScrollView>
+      <View style={styles.container}>
+        <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
+        <Text>The ISO country codes are internationally recognized codes that designate every country and most of the dependent areas a two-letter combination or a three-letter combination; it is like an acronym, that stands for a country or a state. </Text>
+        <Text>Find any Country ISO Code</Text>
+        <TextInput
+          style={styles.input}
+          onChangeText={setInput}
+          value={input}
+          placeholder="Enter Any Country Name"
+        />
+        <Button title='Find' onPress={findISOCode}/>
+        {data ? <Text>{countryISOCode}</Text>:
+          <ActivityIndicator size="large" color="red" style={styles.indicator}/>
+        }
+        <StatusBar backgroundColor="red"/>
+      </View>
+    </KeyboardAwareScrollView>
   );
 }
 
