@@ -2,20 +2,10 @@ import { StyleSheet, Text, View, Image, Button, TextInput,
         FlatList, StatusBar, ActivityIndicator, Alert } from 'react-native';
 import {useState, useEffect} from "react"
 
-const Item = ({ country }) => (
-  <View style={styles.item}>
-    <Text style={styles.country}>{country}</Text>
-  </View>
-);
 
 export default function HomeScreen() {
 
   const [input, setInput] = useState(null); // to catch the text input
-  const[data, setData] = useState(null)
-
-  const renderItem = ({ item }) => (
-    <Item country={item.name} />
-  );
 
   function buttonPressed() { // to handle the press button to display the input content
     // alert(input)
@@ -33,33 +23,19 @@ export default function HomeScreen() {
     );
   }
 
-  useEffect(() => {
-    fetchData()
-    async function fetchData(){
-      const data = await import("../data/countries")
-      setData(data.countries)
-    }
-  }, [])
-
   return (
     <View style={styles.container}>
-      <Image source={require("../assets/profile.jpg")} style={styles.image}/>
-      <Text>Welcome Back to the Best App Ever!</Text>
+      <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
+      <Text>The ISO country codes are internationally recognized codes that designate every country and most of the dependent areas a two-letter combination or a three-letter combination; it is like an acronym, that stands for a country or a state. </Text>
+      <Text>Find any Country ISO Code</Text>
       <TextInput
         style={styles.input}
         onChangeText={setInput}
         value={input}
-        placeholder="useless placeholder"
+        placeholder="Enter Any Country Name"
       />
-      <Button title='Button' onPress={buttonPressed}/>
-      { data? 
-      <FlatList
-        data={data}
-        renderItem={renderItem}
-        keyExtractor={item => item.code}
-      /> :
-      <ActivityIndicator size="large" color="red" style={styles.indicator}/>
-      }
+      <Button title='Find' onPress={buttonPressed}/>
+      <Text>ISO Code</Text>
       <StatusBar backgroundColor="red"/>
     </View>
   );
@@ -70,11 +46,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
+    // justifyContent: 'center',
   },
   image: {
-    width: 100,
-    height: 100,
+    width: '100%',
+    height: 240,
   },
   input: {
     height: 40,

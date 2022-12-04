@@ -1,9 +1,10 @@
-import { View, Text } from "react-native"
+import { View, Text, StatusBar } from "react-native"
 
 export default function RecordsScreen(){
   return(
     <View>
-      <Text>Records Page</Text>
+      <Text>This is Your Best Score:</Text>
+      <StatusBar backgroundColor="red"/>
     </View>
   )
 }
