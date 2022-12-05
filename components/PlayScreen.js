@@ -1,6 +1,6 @@
 import Checkbox from 'expo-checkbox';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, StatusBar } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Speech from 'expo-speech';
 import { Button } from 'react-native';
@@ -10,6 +10,7 @@ import CountDown from 'react-native-countdown-component';
 
 export default function PlayScreen() {
   const [isChecked, setChecked] = useState(false);
+  const [country, setCountry] = useState(null);
 
   const[countries] = useCountry()
   const shuffledCountries = countries
@@ -44,6 +45,14 @@ export default function PlayScreen() {
     Speech.speak(thingToSay);
   };
 
+  const found = () => {
+    Alert.alert(
+      "Great Job !!!",
+      `You have found ${shuffledCountries[i].name} in less than 30 seconds`,
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    );
+  }
+
   return (
     <View style={styles.container}>
       <MapView style={styles.map} />
@@ -54,7 +63,7 @@ export default function PlayScreen() {
       <Button title="Press to hear some words" onPress={speak} />
       <CountDown
         size={30}
-        until={60}
+        until={30}
         onFinish={() => alert('Finished')}
         digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
         digitTxtStyle={{color: '#1CC625'}}
@@ -64,6 +73,7 @@ export default function PlayScreen() {
         timeLabels={{m: null, s: null}}
         showSeparator
       />
+      <Button title='Found' onPress={found}/>
       <StatusBar backgroundColor="red"/>
     </View>
   );
