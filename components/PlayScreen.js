@@ -11,15 +11,13 @@ import CountDown from 'react-native-countdown-component';
 export default function PlayScreen() {
   // const [isChecked, setChecked] = useState(false);
   // const [country, setCountry] = useState(null);
-  const[until, setUntil] = useState(0)
-  const[counter, setCounter] = useState(0)
+  const[until, setUntil] = useState(30)
   const[isRunning, setIsRunning] = useState(false)
   const[start, setStart] = useState(false)
-
+  
   const[countries] = useCountry()
   const shuffledCountries = countries
-
-  let i = 0
+  const[counter, setCounter] = useState(shuffledCountries.length)
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -40,25 +38,29 @@ export default function PlayScreen() {
   }
 
   const speak = () => {
-    console.log(i)
+    console.log(counter)
     
-    // setUntil(0)
-    setIsRunning(true)
-    if (i == 0) {
+    if (counter == shuffledCountries.length || counter == 0) {
+      setUntil(0)
+      // setIsRunning(true)
+      console.log("called")
       setUntil(0)
       shuffle(shuffledCountries)
-      setCounter(shuffledCountries.length)
+      // setCounter(shuffledCountries.length)
     }
-    setCounter(i--)
-    const thingToSay = shuffledCountries[counter].name;
+    console.log("called-2")
+    setCounter(counter - 1)
+    // const thingToSay = shuffledCountries[counter].name;
+    const thingToSay = shuffledCountries[counter - 1].name;
     Speech.speak(thingToSay);
   };
 
   const found = () => {
-    setUntil(30)
-    console.log(i)
+    // setUntil(30)
+    console.log(counter)
     Alert.alert(
       "Great Job !!!",
+      // `You have found ${shuffledCountries[counter].name} in less than 30 seconds`,
       `You have found ${shuffledCountries[counter].name} in less than 30 seconds`,
       { text: "OK", onPress: () => console.log("OK Pressed") }
     );
@@ -66,7 +68,7 @@ export default function PlayScreen() {
 
   const startPlay = () => {
     setStart(true)
-    setUntil(30)
+    // setUntil(30)
   }
 
   return (
@@ -77,30 +79,28 @@ export default function PlayScreen() {
         <Text style={styles.paragraph}>Normal checkbox</Text>
       </View> */}
       {start ? 
-      
-      
-      <>
-      <Button title="Press to hear the Country" onPress={speak} />
-      <CountDown
-        size={30}
-        until={until}
-        // onFinish={notFound}
-        digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
-        digitTxtStyle={{color: '#1CC625'}}
-        timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
-        separatorStyle={{color: '#1CC625'}}
-        timeToShow={['S']}
-        timeLabels={{m: null, s: null}}
-        showSeparator
-        running={isRunning}
-      />
-      <Button title='Found' onPress={found}/>
-      </>:
-      <>
-        <Text>Description</Text>
-        <Button title='Start' onPress={startPlay}/>
-      </>
-    }
+        <>
+        <Button title="Press to hear the Country" onPress={speak} />
+        <CountDown
+          size={30}
+          until={until}
+          // onFinish={notFound}
+          digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
+          digitTxtStyle={{color: '#1CC625'}}
+          timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
+          separatorStyle={{color: '#1CC625'}}
+          timeToShow={['S']}
+          timeLabels={{m: null, s: null}}
+          showSeparator
+          // running={isRunning}
+        />
+        <Button title='Found' onPress={found}/>
+        </>:
+        <>
+          <Text>Description</Text>
+          <Button title='Start' onPress={startPlay}/>
+        </>
+      }
       <StatusBar backgroundColor="red"/>
     </View>
   );
