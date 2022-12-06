@@ -7,7 +7,7 @@ import CountDown from 'react-native-countdown-component';
 
 export default function PlayScreen() {
   const[countries] = useCountry()
-  const shuffledCountries = countries
+  const shuffledCountries = countries.map(country => country.name)
 
   const[counter, setCounter] = useState(shuffledCountries.length)
   const[until, setUntil] = useState(30)
@@ -34,7 +34,7 @@ export default function PlayScreen() {
       shuffle(shuffledCountries)
     }
     setCounter(counter - 1)
-    const thingToSay = shuffledCountries[counter - 1].name;
+    const thingToSay = shuffledCountries[counter - 1];
     Speech.speak(thingToSay);
   };
 
@@ -42,7 +42,7 @@ export default function PlayScreen() {
     setUntil(30)
     Alert.alert(
       "Great Job !!!",
-      `You have found ${shuffledCountries[counter].name} in less than 30 seconds`,
+      `You have found ${shuffledCountries[counter]} in less than 30 seconds`,
       { text: "OK", onPress: () => console.log("OK Pressed") }
     );
   }
