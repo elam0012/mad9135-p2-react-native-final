@@ -60,11 +60,11 @@ export default function PlayScreen() {
           <Text style={{color:"red", fontSize: 20, fontWeight:"bold", marginVertical: 32}}>Press here to hear the Country</Text>
         </TouchableOpacity>
         <CountDown
-          size={30}
+          size={25}
           until={until}
           // onFinish={notFound}
           digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
-          digitTxtStyle={{color: '#1CC625'}}
+          digitTxtStyle={{color: '#1B96C2'}}
           timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
           separatorStyle={{color: '#1CC625'}}
           timeToShow={['S']}
@@ -73,7 +73,6 @@ export default function PlayScreen() {
           style={{marginBottom: 16}}
           // running={isRunning}
         />
-        {/* <Button title='Found' onPress={found}/> */}
         <TouchableOpacity style={styles.button} onPress={found}>
           <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Found</Text>
         </TouchableOpacity>

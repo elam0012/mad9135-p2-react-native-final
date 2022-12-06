@@ -26,7 +26,7 @@ export default function HomeScreen() {
           <View style={styles.container}>
             <Text style={{textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Find any country ISO codes, which are internationally recognized codes that designate every country a two or three letter combination </Text>
             <View style={styles.innerContainer}>
-              {countries ? <Text style={{color:"red", fontSize: 15, fontWeight:"bold"}}>The ISO Code is: {countryISOCode}</Text>:
+              {countries ? <Text style={{color:"red", fontSize: 16, fontWeight:"bold"}}>The ISO Code is: {countryISOCode}</Text>:
                 <ActivityIndicator size="large" color="red"/>
               }
               <TextInput
@@ -68,11 +68,12 @@ const styles = StyleSheet.create({
     height: 40,
     width: 250,
     margin: 12,
-    borderWidth: 1,
     padding: 10,
-    borderRadius: 16,
-    borderColor: "#DCDCDC",
-    fontWeight: "bold"
+    borderBottomColor: "#DCDCDC",
+    borderBottomWidth: 1,
+    fontWeight: "bold",
+    color: "#94D002",
+    fontSize: 18
   },
   button: {
     borderRadius: 16,
