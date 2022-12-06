@@ -1,5 +1,5 @@
 import Checkbox from 'expo-checkbox';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { StyleSheet, Text, View, StatusBar, Alert } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Speech from 'expo-speech';
@@ -10,57 +10,44 @@ import CountDown from 'react-native-countdown-component';
 
 export default function PlayScreen() {
   // const [isChecked, setChecked] = useState(false);
-  // const [country, setCountry] = useState(null);
-  const[until, setUntil] = useState(30)
-  const[isRunning, setIsRunning] = useState(false)
-  const[start, setStart] = useState(false)
+  
   
   const[countries] = useCountry()
   const shuffledCountries = countries
+
   const[counter, setCounter] = useState(shuffledCountries.length)
+  const[until, setUntil] = useState(30)
+  const[start, setStart] = useState(false)
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
-
     // While there remain elements to shuffle.
     while (currentIndex != 0) {
-
       // Pick a remaining element.
       randomIndex = Math.floor(Math.random() * currentIndex);
       currentIndex--;
-
       // And swap it with the current element.
       [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
-
     return array;
   }
 
   const speak = () => {
-    console.log(counter)
-    
+    setUntil(0)
     if (counter == shuffledCountries.length || counter == 0) {
       setUntil(0)
-      // setIsRunning(true)
-      console.log("called")
-      setUntil(0)
       shuffle(shuffledCountries)
-      // setCounter(shuffledCountries.length)
     }
-    console.log("called-2")
     setCounter(counter - 1)
-    // const thingToSay = shuffledCountries[counter].name;
     const thingToSay = shuffledCountries[counter - 1].name;
     Speech.speak(thingToSay);
   };
 
   const found = () => {
-    // setUntil(30)
-    console.log(counter)
+    setUntil(30)
     Alert.alert(
       "Great Job !!!",
-      // `You have found ${shuffledCountries[counter].name} in less than 30 seconds`,
       `You have found ${shuffledCountries[counter].name} in less than 30 seconds`,
       { text: "OK", onPress: () => console.log("OK Pressed") }
     );
@@ -68,7 +55,6 @@ export default function PlayScreen() {
 
   const startPlay = () => {
     setStart(true)
-    // setUntil(30)
   }
 
   return (
