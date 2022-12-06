@@ -46,7 +46,7 @@ export default function HomeScreen() {
             style={styles.button}
             onPress={findISOCode}
           >
-            <Text style={{color:"#94D902", fontSize: 18, fontWeight: "bold"}}>Find</Text>
+            <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Find</Text>
           </TouchableOpacity>
         </View>
         </View>
@@ -86,8 +86,6 @@ const styles = StyleSheet.create({
   },
   button: {
     borderRadius: 16,
-    borderColor: "black",
-    borderWidth: 1,
     width: 100,
     height:35,
     backgroundColor: "#1B96C2",
