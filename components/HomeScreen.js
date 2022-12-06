@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, Image, Button, TextInput,
-        FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView } from 'react-native';
+        FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
 import {useState, useEffect} from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useCountry } from '../context/countryContext';
@@ -24,22 +24,34 @@ export default function HomeScreen() {
 
   return (
     <KeyboardAwareScrollView>
-      <View style={styles.container}>
+        <View>
         <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
-        <Text>The ISO country codes are internationally recognized codes that designate every country and most of the dependent areas a two-letter combination or a three-letter combination; it is like an acronym, that stands for a country or a state. </Text>
-        <Text>Find any Country ISO Code</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={setInput}
-          value={input}
-          placeholder="Enter Any Country Name"
-        />
-        <Button title='Find' onPress={findISOCode}/>
-        {countries ? <Text>{countryISOCode}</Text>:
-          <ActivityIndicator size="large" color="red" style={styles.indicator}/>
-        }
-        <StatusBar backgroundColor="red"/>
+      <View style={styles.container}>
+
+        <Text style={{textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Find any country ISO codes, which are internationally recognized codes that designate every country a two or three letter combination </Text>
+        <View style={styles.innerContainer}>
+
+          {/* <Text>Find any Country ISO Code</Text> */}
+          {countries ? <Text style={{color:"red", fontSize: 15, fontWeight:"bold"}}>The ISO Code is: {countryISOCode}</Text>:
+            <ActivityIndicator size="large" color="red"/>
+          }
+          <TextInput
+            style={styles.input}
+            onChangeText={setInput}
+            value={input}
+            placeholder="Enter Any Country Name"
+          />
+          {/* <Button title='Find' onPress={findISOCode} style={styles.button}/> */}
+          <TouchableOpacity
+            style={styles.button}
+            onPress={findISOCode}
+          >
+            <Text style={{color:"#94D902", fontSize: 18, fontWeight: "bold"}}>Find</Text>
+          </TouchableOpacity>
+        </View>
+        </View>
       </View>
+        <StatusBar backgroundColor="red"/>
     </KeyboardAwareScrollView>
   );
 }
@@ -49,7 +61,14 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    // justifyContent: 'center',
+    padding:20,
+    height: 310
+  },
+  innerContainer: {
+    flex: 1,
+    alignItems: 'center',
+    padding:20,
+    marginTop: 10
   },
   image: {
     width: '100%',
@@ -57,23 +76,24 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    width: 200,
+    width: 250,
     margin: 12,
     borderWidth: 1,
     padding: 10,
-  },
-  item: {
-    backgroundColor: 'gray',
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  country: {
-    fontSize: 20,
-    color: "white",
+    borderRadius: 16,
+    borderColor: "#DCDCDC",
     fontWeight: "bold"
   },
-  indicator: {
+  button: {
+    borderRadius: 16,
+    borderColor: "black",
+    borderWidth: 1,
+    width: 100,
+    height:35,
+    backgroundColor: "#1B96C2",
+    alignItems: 'center',
+    justifyContent: "center",
+    marginTop: 10
   }
 });
 
