@@ -1,12 +1,9 @@
-import { StyleSheet, Text, View, Image, Button, TextInput,
-        FlatList, StatusBar, ActivityIndicator, Alert, KeyboardAvoidingView, TouchableOpacity } from 'react-native';
-import {useState, useEffect} from "react"
+import { StyleSheet, Text, View, Image, TextInput, StatusBar, ActivityIndicator, Alert, TouchableOpacity } from 'react-native';
+import {useState} from "react"
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import { useCountry } from '../context/countryContext';
 
-
 export default function HomeScreen() {
-
   const [input, setInput] = useState(null); // to catch the text input
   const[countryISOCode, setCountryISOCode] = useState(null)
 
@@ -25,33 +22,26 @@ export default function HomeScreen() {
   return (
     <KeyboardAwareScrollView>
         <View>
-        <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
-      <View style={styles.container}>
-
-        <Text style={{textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Find any country ISO codes, which are internationally recognized codes that designate every country a two or three letter combination </Text>
-        <View style={styles.innerContainer}>
-
-          {/* <Text>Find any Country ISO Code</Text> */}
-          {countries ? <Text style={{color:"red", fontSize: 15, fontWeight:"bold"}}>The ISO Code is: {countryISOCode}</Text>:
-            <ActivityIndicator size="large" color="red"/>
-          }
-          <TextInput
-            style={styles.input}
-            onChangeText={setInput}
-            value={input}
-            placeholder="Enter Any Country Name"
-          />
-          {/* <Button title='Find' onPress={findISOCode} style={styles.button}/> */}
-          <TouchableOpacity
-            style={styles.button}
-            onPress={findISOCode}
-          >
-            <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Find</Text>
-          </TouchableOpacity>
-        </View>
-        </View>
+          <Image source={require("../assets/worldMap.jpg")} style={styles.image}/>
+          <View style={styles.container}>
+            <Text style={{textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Find any country ISO codes, which are internationally recognized codes that designate every country a two or three letter combination </Text>
+            <View style={styles.innerContainer}>
+              {countries ? <Text style={{color:"red", fontSize: 15, fontWeight:"bold"}}>The ISO Code is: {countryISOCode}</Text>:
+                <ActivityIndicator size="large" color="red"/>
+              }
+              <TextInput
+                style={styles.input}
+                onChangeText={setInput}
+                value={input}
+                placeholder="Enter Any Country Name"
+              />
+              <TouchableOpacity style={styles.button} onPress={findISOCode}>
+                <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Find</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
       </View>
-        <StatusBar backgroundColor="red"/>
+      <StatusBar backgroundColor="red"/>
     </KeyboardAwareScrollView>
   );
 }
