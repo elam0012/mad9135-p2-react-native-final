@@ -1,17 +1,11 @@
-import Checkbox from 'expo-checkbox';
-import React, { useState, useEffect, useRef } from 'react';
-import { StyleSheet, Text, View, StatusBar, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, StatusBar, Alert, TouchableOpacity } from 'react-native';
 import MapView from 'react-native-maps';
 import * as Speech from 'expo-speech';
-import { Button } from 'react-native';
 import { useCountry } from '../context/countryContext';
 import CountDown from 'react-native-countdown-component';
 
-
 export default function PlayScreen() {
-  // const [isChecked, setChecked] = useState(false);
-  
-  
   const[countries] = useCountry()
   const shuffledCountries = countries
 
@@ -60,13 +54,11 @@ export default function PlayScreen() {
   return (
     <View style={styles.container}>
       <MapView style={styles.map} />
-      {/* <View style={styles.section}>
-        <Checkbox style={styles.checkbox} value={isChecked} onValueChange={setChecked} />
-        <Text style={styles.paragraph}>Normal checkbox</Text>
-      </View> */}
       {start ? 
         <>
-        <Button title="Press to hear the Country" onPress={speak} />
+        <TouchableOpacity onPress={speak}>
+          <Text style={{color:"red", fontSize: 20, fontWeight:"bold", marginVertical: 32}}>Press here to hear the Country</Text>
+        </TouchableOpacity>
         <CountDown
           size={30}
           until={until}
@@ -78,13 +70,19 @@ export default function PlayScreen() {
           timeToShow={['S']}
           timeLabels={{m: null, s: null}}
           showSeparator
+          style={{marginBottom: 16}}
           // running={isRunning}
         />
-        <Button title='Found' onPress={found}/>
+        {/* <Button title='Found' onPress={found}/> */}
+        <TouchableOpacity style={styles.button} onPress={found}>
+          <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Found</Text>
+        </TouchableOpacity>
         </>:
         <>
-          <Text>Description</Text>
-          <Button title='Start' onPress={startPlay}/>
+          <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun now. Test your ability to find countries in less than 30 seconds. press on the button to listen and then search for the requested country!.</Text>
+          <TouchableOpacity style={styles.button} onPress={startPlay}>
+            <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Start</Text>
+          </TouchableOpacity>
         </>
       }
       <StatusBar backgroundColor="red"/>
@@ -95,21 +93,20 @@ export default function PlayScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // marginHorizontal: 16,
-    // marginVertical: 32,
-  },
-  section: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  paragraph: {
-    fontSize: 15,
-  },
-  checkbox: {
-    margin: 8,
+    alignItems: "center",
+    backgroundColor: '#fff',
   },
   map: {
     width: "100%",
     height: 240,
   },
+  button: {
+    borderRadius: 16,
+    width: 100,
+    height:35,
+    backgroundColor: "#1B96C2",
+    alignItems: 'center',
+    justifyContent: "center",
+    marginTop: 10
+  }
 });
