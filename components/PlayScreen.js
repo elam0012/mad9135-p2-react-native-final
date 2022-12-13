@@ -92,7 +92,6 @@ export default function PlayScreen() {
           timeLabels={{m: null, s: null}}
           showSeparator
           style={{marginBottom: 16}}
-          // running={isRunning}
         />
           <View style={styles.bottom}>
             <TouchableOpacity style={styles.buttonNext} onPress={speak}>

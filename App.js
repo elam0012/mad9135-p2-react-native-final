@@ -1,6 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import { SafeAreaProvider} from 'react-native-safe-area-context';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import HomeScreen from './components/HomeScreen';
 import PlayScreen from './components/PlayScreen';
 import CountriesScreen from './components/CountriesScreen';
@@ -22,7 +23,7 @@ export default function App() {
     <CountryProvider>
       <NavigationContainer>
         <SafeAreaProvider>
-          {/* <SafeAreaView> */}
+          {/* <SafeAreaView>  when enabling this the code is not working!!*/} 
             <Tab.Navigator
             screenOptions={{
             headerStyle: { backgroundColor: "#1B96C2" },
