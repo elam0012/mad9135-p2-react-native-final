@@ -7,12 +7,11 @@ import CountDown from 'react-native-countdown-component';
 
 export default function PlayScreen() {
   const[countries] = useCountry()
-  // const shuffledCountries = countries.map(country => country.name)
   const [shuffledCountries, setShuffledCountries] = useState(countries.map(country => country.name))
-
   const[counter, setCounter] = useState(shuffledCountries.length)
   const[until, setUntil] = useState(30)
   const[start, setStart] = useState(false)
+  const[foundMonitor, setFoundMonitor] = useState(0)
 
   function shuffle(array) {
     let currentIndex = array.length,  randomIndex;
@@ -29,8 +28,8 @@ export default function PlayScreen() {
   }
 
   const speak = () => {
+    setFoundMonitor(0)
     setUntil(0)
-    console.log(counter)
     if (counter == shuffledCountries.length || counter == 0) {
       setUntil(0)
       setShuffledCountries(shuffle(shuffledCountries))
@@ -42,10 +41,29 @@ export default function PlayScreen() {
   };
 
   const found = () => {
+    if (counter == shuffledCountries.length) {
+      Alert.alert(
+      "listen the country name first!",
+      `Please click on the red text below the map to hear the country name`,
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+      );
+      return
+    }
+    setFoundMonitor(1)
     setUntil(30)
     Alert.alert(
       "Great Job !!!",
       `You have found ${shuffledCountries[counter]} in less than 30 seconds`,
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    );
+  }
+
+  const notFound = () => {
+    if (foundMonitor == 1) return
+    setUntil(30)
+    Alert.alert(
+      "Country not Found :(",
+      `You were not able to find ${shuffledCountries[counter]} in less than 30 seconds`,
       { text: "OK", onPress: () => console.log("OK Pressed") }
     );
   }
@@ -65,7 +83,7 @@ export default function PlayScreen() {
         <CountDown
           size={25}
           until={until}
-          // onFinish={notFound}
+          onFinish={notFound}
           digitStyle={{backgroundColor: '#FFF', borderWidth: 2, borderColor: '#1CC625'}}
           digitTxtStyle={{color: '#1B96C2'}}
           timeLabelStyle={{color: 'red', fontWeight: 'bold'}}
@@ -86,7 +104,7 @@ export default function PlayScreen() {
           </View>
         </>:
         <>
-          <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun now. Test your ability to find countries in less than 30 seconds. press on the button to listen to which country you need to find and then find it!.</Text>
+          <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun and challenge. Test your ability to find at least one country in less than 30 seconds. press and listen to which country you need to find. If it is hard, you still have another chance by clicking on Next button. Let's find it!!</Text>
           <TouchableOpacity style={styles.button} onPress={startPlay}>
             <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Start</Text>
           </TouchableOpacity>
