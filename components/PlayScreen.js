@@ -76,9 +76,14 @@ export default function PlayScreen() {
           style={{marginBottom: 16}}
           // running={isRunning}
         />
-        <TouchableOpacity style={styles.button} onPress={found}>
-          <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Found</Text>
-        </TouchableOpacity>
+          <View style={styles.bottom}>
+            <TouchableOpacity style={styles.buttonNext} onPress={speak}>
+              <Text style={{color:"yellow", fontSize: 20, fontWeight: "bold"}}>Next</Text>
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.button} onPress={found}>
+              <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Found</Text>
+            </TouchableOpacity>
+          </View>
         </>:
         <>
           <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun now. Test your ability to find countries in less than 30 seconds. press on the button to listen to which country you need to find and then find it!.</Text>
@@ -109,6 +114,20 @@ const styles = StyleSheet.create({
     backgroundColor: "#1B96C2",
     alignItems: 'center',
     justifyContent: "center",
-    marginTop: 10
+    marginTop: 10,
+    marginLeft: 10
+  },
+  buttonNext: {
+    borderRadius: 16,
+    width: 100,
+    height:35,
+    backgroundColor: "red",
+    alignItems: 'center',
+    justifyContent: "center",
+    marginTop: 10,
+    marginRight: 10
+  },
+  bottom: {
+    flexDirection: 'row',
   }
 });
