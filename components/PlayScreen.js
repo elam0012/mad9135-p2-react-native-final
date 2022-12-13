@@ -7,7 +7,8 @@ import CountDown from 'react-native-countdown-component';
 
 export default function PlayScreen() {
   const[countries] = useCountry()
-  const shuffledCountries = countries.map(country => country.name)
+  // const shuffledCountries = countries.map(country => country.name)
+  const [shuffledCountries, setShuffledCountries] = useState(countries.map(country => country.name))
 
   const[counter, setCounter] = useState(shuffledCountries.length)
   const[until, setUntil] = useState(30)
@@ -29,9 +30,11 @@ export default function PlayScreen() {
 
   const speak = () => {
     setUntil(0)
+    console.log(counter)
     if (counter == shuffledCountries.length || counter == 0) {
       setUntil(0)
-      shuffle(shuffledCountries)
+      setShuffledCountries(shuffle(shuffledCountries))
+
     }
     setCounter(counter - 1)
     const thingToSay = shuffledCountries[counter - 1];
@@ -78,7 +81,7 @@ export default function PlayScreen() {
         </TouchableOpacity>
         </>:
         <>
-          <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun now. Test your ability to find countries in less than 30 seconds. press on the button to listen and then search for the requested country!.</Text>
+          <Text style={{marginVertical: 32, marginHorizontal: 16, textAlign: "center", fontSize: 15, fontWeight: "bold", color: "#1B96C2"}}>Let's have some fun now. Test your ability to find countries in less than 30 seconds. press on the button to listen to which country you need to find and then find it!.</Text>
           <TouchableOpacity style={styles.button} onPress={startPlay}>
             <Text style={{color:"#94D902", fontSize: 20, fontWeight: "bold"}}>Start</Text>
           </TouchableOpacity>
